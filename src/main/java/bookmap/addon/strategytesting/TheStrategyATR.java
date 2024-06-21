@@ -20,7 +20,9 @@ import java.util.Map;
 @Layer1SimpleAttachable
 @Layer1StrategyName("VWAP Breakout ATR Strategy")
 @Layer1ApiVersion(Layer1ApiVersionValue.VERSION2)
-public class TheStrategyATR implements CustomModule, TradeDataListener, TimeListener, OrdersListener, CustomSettingsPanelProvider, BarDataListener {
+public class TheStrategyATR
+        implements CustomModule, TradeDataListener, TimeListener, OrdersListener, CustomSettingsPanelProvider,
+        BarDataListener {
 
     private VWAPCalculator vwapCalculator = new VWAPCalculator();
     private OrderPlacer orderPlacer;
@@ -258,11 +260,13 @@ public class TheStrategyATR implements CustomModule, TradeDataListener, TimeList
             if (lastCrossTime == 0) {
                 lastCrossTime = currentTime;
             } else if (currentTime - lastCrossTime > dynamicConfirmationTime) {
-                Log.info(isBullishBreakout ? "Confirmed bullish breakout" : "Confirmed bearish breakdown" + " at price: " + price);
+                Log.info(isBullishBreakout ? "Confirmed bullish breakout"
+                        : "Confirmed bearish breakdown" + " at price: " + price);
                 priceAboveVwap = isBullishBreakout;
                 lastCrossTime = 0;
 
-                orderPlacer.placeOrder(isBullishBreakout, price, quantity, trailingStopStep, takeProfitOffset, stopLossOffset);
+                orderPlacer.placeOrder(isBullishBreakout, price, quantity, trailingStopStep, takeProfitOffset,
+                        stopLossOffset);
             }
         } else {
             lastCrossTime = 0;
